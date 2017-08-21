@@ -7,13 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 namespace Marlowe.Antonius.Controllers
 {
     [Route("api/[controller]")]
-    public class ValuesController : Controller
+    public class CvController : Controller
     {
-        // GET api/values
+        // GET api/cv
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var service = new CvService();
+            var model = new Cv
+            {
+                PersoonlijkeGegevens = service.PersoonlijkeGegevens(),
+                Werkervaring = service.GetWerkervaring(),
+                Opleidingen = service.GetOpleidingen()
+
+            };
+            
+            return Ok(model);
         }
 
         // GET api/values/5
